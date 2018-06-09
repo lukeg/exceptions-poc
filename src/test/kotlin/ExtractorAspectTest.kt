@@ -7,7 +7,8 @@ import org.junit.Assert
 import org.junit.platform.runner.JUnitPlatform
 import org.junit.runner.RunWith
 import test.ExtractionElement
-import test.Extractor
+import kotlin.test.assertFailsWith
+import kotlin.test.fail
 
 
 @RunWith(JUnitPlatform::class)
@@ -20,57 +21,31 @@ class ExtractorAspectTest : Spek
             val thrower = Thrower()
             it("should throw ExtractionElement when a method with @Extractor annotation is called")
             {
-                val status = try {
-                    thrower.annotatedThrowNPE()
-                    false
-                } catch (ex : ExtractionElement) {
-                    true
-                }
-                Assert.assertTrue(status)
+                assertFailsWith<ExtractionElement> {thrower.annotatedThrowNPE() }
             }
             it("should not throw Extraction element when a method with @Extractor annotation throws something else")
             {
-                val status = try {
-                    thrower.annotatedThrowRandomException()
-                    false
-                } catch (exception: ExtractionElement) {
-                    false
-                } catch (t: Throwable) {
-                    true
-                }
-                Assert.assertTrue(status)
+                assertFailsWith<ArithmeticException> { thrower.annotatedThrowArithmeticException() }
             }
             it("should not throw when a method with @Extractor annotation does not throw")
             {
-                val status = try {
+                try {
                     thrower.annotatedReturnNormally()
-                    true
                 } catch (t: Throwable) {
-                    false
+                    fail()
                 }
-                Assert.assertTrue(status)
             }
             it("should do nothing when a method without @Extractor annotation throws a NPE")
             {
-                val status = try {
-                    thrower.nonAnnotatedThrowNPE()
-                    false
-                } catch (e: ExtractionElement) {
-                    false
-                } catch (npe: NullPointerException) {
-                    true
-                }
-                Assert.assertTrue(status)
-            }
+                assertFailsWith<NullPointerException> { thrower.nonAnnotatedThrowNPE()}
+             }
             it("should do nothing when a method withoud @Extractor annotation does not throw")
             {
-                val status = try {
+                try {
                     thrower.nonAnnotatedReturnNormally()
-                    true
                 } catch (t : Throwable) {
-                    false
+                    fail()
                 }
-                Assert.assertTrue(status)
             }
         }
     }

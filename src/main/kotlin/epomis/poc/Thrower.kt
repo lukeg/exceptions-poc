@@ -8,7 +8,7 @@ class Thrower
     fun annotatedThrowNPE () : Any?  { throw NullPointerException() }
 
     @Extractor("a","b")
-    fun annotatedThrowRandomException () : Nothing = throw ArithmeticException()
+    fun annotatedThrowArithmeticException () : Nothing = throw ArithmeticException()
 
     @Extractor("a","b")
     fun annotatedReturnNormally () {}
