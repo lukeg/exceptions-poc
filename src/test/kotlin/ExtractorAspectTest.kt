@@ -47,6 +47,10 @@ class ExtractorAspectTest : Spek
                     fail()
                 }
             }
+            it ("should do nothing when a method with annotation other than @Extractor throws")
+            {
+                assertFailsWith<NullPointerException> { thrower.annotatedWithRandomAnnotation() }
+            }
         }
     }
 })

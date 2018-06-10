@@ -11,7 +11,4 @@ fun main (args: Array<String>) {
     } catch ( t: Throwable) {
         print(t.javaClass)
     }
-    object  {
-        fun foo () { print("foo")}
-    }.foo()
 }

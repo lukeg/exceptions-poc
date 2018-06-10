@@ -5,7 +5,7 @@ import test.Extractor
 class Thrower
 {
     @Extractor("a","b")
-    fun annotatedThrowNPE () : Any?  { throw NullPointerException() }
+    fun annotatedThrowNPE () : Nothing  = throw NullPointerException()
 
     @Extractor("a","b")
     fun annotatedThrowArithmeticException () : Nothing = throw ArithmeticException()
@@ -17,4 +17,6 @@ class Thrower
 
     fun nonAnnotatedReturnNormally () {}
 
+    @Deprecated("")
+    fun annotatedWithRandomAnnotation () : Nothing = throw NullPointerException()
 }
